@@ -29,7 +29,7 @@ resource "aws_security_group" "roboshop_security_groups" {
   }
 
   tags = {
-    Name        = "roboshop-frontend"
+    Name        = "allow-terraform"
     project     = "roboshop"
     environment = "dev"
   }

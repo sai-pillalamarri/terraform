@@ -1,0 +1,6 @@
+.terraform/
+terraform.tfstate
+terraform.tfstate.backup
+
+# Var files that may contain secrets
+*.tfvars
