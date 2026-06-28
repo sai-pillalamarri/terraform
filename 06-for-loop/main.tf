@@ -1,12 +1,11 @@
 resource "aws_instance" "roboshop_instances" {
-  #count                  = 4
-  count                  = length(var.instances)
-  ami                    = var.ami_id
-  instance_type          = var.instance_type
-  vpc_security_group_ids = [aws_security_group.roboshop_security_groups[count.index].id, aws_security_group.roboshop_common_security_group.id]
+  for_each               = var.instances
+  ami                    = each.value.ami_id
+  instance_type          = each.value.instance_type
+  vpc_security_group_ids = [aws_security_group.roboshop_security_groups[each.key].id, aws_security_group.roboshop_common_security_group.id]
 
   tags = {
-    Name        = "${var.project}-${var.environment}-${var.instances[count.index]}"
+    Name        = "${var.project}-${var.environment}-${each.key}"
     project     = "roboshop"
     environment = "dev"
   }
@@ -14,9 +13,8 @@ resource "aws_instance" "roboshop_instances" {
 
 resource "aws_security_group" "roboshop_security_groups" {
 
-  #count       = 4
-  count       = length(var.instances)
-  name        = "${var.project}-${var.environment}-${var.instances[count.index]}"
+  for_each    = var.instances
+  name        = "${var.project}-${var.environment}-${each.key}"
   description = "Allow TLS inbound traffic and all outbound traffic"
 
   ingress {
@@ -35,7 +33,11 @@ resource "aws_security_group" "roboshop_security_groups" {
   }
 
   tags = {
-    Name = "${var.project}-${var.environment}-${var.instances[count.index]}"
+    Name = "${var.project}-${var.environment}-${each.key}"
+  }
+
+  lifecycle {
+    create_before_destroy = true
   }
 
 }
@@ -63,6 +65,10 @@ resource "aws_security_group" "roboshop_common_security_group" {
 
   tags = {
     Name = "${var.project}-common"
+  }
+
+  lifecycle {
+    create_before_destroy = true
   }
 
 }

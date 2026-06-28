@@ -5,7 +5,7 @@ variable "ami_id" {
 
 variable "instances" {
   type    = list(string)
-  default = ["mongodb", "mysql", "redis", "rabbitmq"]
+  default = ["mongodb", "mysql", "redis", "rabbitmq", "catalogue", "user", "cart", "shipping", "payment", "dispatch", "frontend"]
 
 }
 
@@ -62,5 +62,17 @@ variable "test" {
 variable "environment" {
   type    = string
   default = "dev"
+
+}
+
+variable "domain" {
+  type    = string
+  default = "aslearnings.online"
+
+}
+
+variable "zone_id" {
+
+  default = "Z09423303UD7JE5COLBZI"
 
 }

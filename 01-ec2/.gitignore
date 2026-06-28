@@ -1,9 +1,0 @@
-# Provider binaries - auto downloaded by terraform init
-.terraform/
-
-# State files - NEVER push these
-terraform.tfstate
-terraform.tfstate.backup
-
-# Var files that may contain secrets
-*.tfvars
