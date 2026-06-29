@@ -29,11 +29,18 @@ resource "aws_instance" "roboshop_instances" {
 
   }
 
-  provisioner "remote-exec" {
-    inline = [
-      "sudo dnf install nginx -y",
-      "sudo systemctl start nginx"
-    ]
+  #   provisioner "remote-exec" {
+  #     inline = [
+  #       "sudo dnf install nginx -y",
+  #       "sudo systemctl start nginx"
+  #     ]
+
+  #   }
+
+  provisioner "file" {
+
+    source      = "script.sh"
+    destination = "/tmp/script.sh"
 
   }
 }
